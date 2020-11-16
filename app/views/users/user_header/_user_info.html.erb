@@ -1,0 +1,15 @@
+<div class='user-profile-info'>
+    <h1>
+        <span class="material-icons">restaurant</span>
+        <%= @user.name %>
+    </h1>
+    <a href="http://maps.google.com/maps?q=<%= @user.address_line1 %>">
+        <span class="material-icons">location_on</span>
+        <%= @user.address_line1 %>
+    </a>
+    <a href="tel:<%= @user.phone %>">
+        <span class="material-icons">phone</span>
+        <%= @user.phone %>
+    </a>
+    <%# render partial: "/users/user_header/social_link_group" %>
+</div>

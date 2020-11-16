@@ -1,0 +1,37 @@
+<!--The is the page returned after user performs category search.-->
+<!--Displays menu items matched by category search.-->
+<div class="category-search-display">
+  <%= render 'shared/back_to_top' %>
+
+  <div style="margin-right: 10%;">
+
+    <div class="row category-show-edit-title">
+      <% if @category_title %>
+        <h2 style="padding-left: 10px;"><%= @category_title %> - Category</h2>
+      <% end %>
+    </div>
+
+    <div class="config-c row">
+      <div class="category-search-main-div">
+        <%= render :partial => "shared/search_option" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="menu-display-section ushow-list">
+    <% if @feed_items.any? %>
+      <div class="row">
+        <div>
+          <% if @selected_cat.any? %>
+            <%= render :partial=> "users/menu_display/menu_display" %>
+            <%= render :partial=> "shared/micropost_modal" %>
+          <% end %>
+        </div>
+        <%= render :partial=> "shared/micropost_modal" %>
+      </div>
+    <% else %>
+       <%= image_tag('search-not-found.png', class: 'search-not-found')  %>
+    <% end %>
+ </div>
+</div>
+<%# render 'layouts/footer' %>

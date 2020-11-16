@@ -1,0 +1,16 @@
+<div class='email'>
+  <div class='email-wrapper'>
+    <h2>Hello, <%= @user.name %></h2>
+    <h3>Welcome to the A Visual Menu platform.</h3>
+    <div class=activate>
+      <p>Click on the link below to activate your account and start building your Visual Menu.</p>
+      <%= link_to "Activate Account", edit_account_activation_url(@user.activation_token,
+                                                      email: @user.email) %>
+    </div>
+   <div class='email-end'>
+     <div class='email-footer'>
+       <p>Thanks for joining A Visual Menu.</p>
+     </div>
+   </div>
+  </div>
+</div>

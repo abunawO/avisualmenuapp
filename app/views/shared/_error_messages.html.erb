@@ -1,0 +1,15 @@
+<!--Error messages that work with other objects-->
+<% if object.errors.any? %>
+  <div id="error_explanation">
+  <div class="form-errors">
+    <p>
+      The form contains <%= pluralize(object.errors.count, "error") %>.
+    </p>
+    </div>
+    <ul>
+    <% object.errors.full_messages.each do |msg| %>
+      <li class="form-errors"><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>

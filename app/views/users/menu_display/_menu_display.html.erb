@@ -1,0 +1,28 @@
+
+<% @categories.each do |category, category_items| %>
+  <% if category.is_published %>
+    <div class='microposts-c'>
+      <button class='microposts-title' onclick='openMicropostList(this)'>
+        <span class='micropost-t-left'>
+          <%= category.name %>
+        </span>
+        <span class='material-icons openListIcon'>keyboard_arrow_down</span>
+      </button>
+
+       <ol class="menu_display_consumer">
+      <% category_items.each do |micropost|  %>
+        <%= render :partial => "microposts/micropost_to_modal", locals: {micropost: micropost} %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+<script>
+  function openMicropostList(self) {
+    var micropostActiveIcon = self.querySelector('.openListIcon');
+    self.parentElement.querySelector('ol').classList.toggle('active');
+    micropostActiveIcon.textContent === 'keyboard_arrow_down'
+    ? micropostActiveIcon.textContent = 'keyboard_arrow_up'
+    : micropostActiveIcon.textContent = 'keyboard_arrow_down';
+  }
+</script>

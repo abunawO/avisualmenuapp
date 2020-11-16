@@ -1,0 +1,23 @@
+<div class='user-header' onclick="openProfileModal()">
+        <div class='user-header-c'>
+            <span class='user-hc-left'>
+                <%= image_tag @user.picture.url, :alt => 'user-image', :id => 'user-image'  if @user.picture? %>
+                <%= render partial: '/users/user_header/user_info' %>
+            </span>
+            <span class='material-icons userbtn'>store</span>
+        </div>
+        <%= render partial: "/users/user_header/social_link_group" %>
+        <%= render partial: '/users/user_header/user_modal'%>
+</div>
+<script>
+    function openProfileModal() {
+        let profilebutton = document.querySelector('#user-profile-modal')
+        if (window.innerWidth <= 500) {
+            if (!profilebutton.classList.contains('active')) {
+                profilebutton.classList.add('active')
+            } else {
+                profilebutton.classList.remove('active')
+            }
+        }
+    }
+</script>

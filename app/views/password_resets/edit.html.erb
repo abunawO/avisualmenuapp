@@ -1,0 +1,48 @@
+<!--Updating the errors for password resets.-->
+<% provide(:title, 'Reset password') %>
+
+<html class="wow-animation" lang="en">
+  <head>
+    <title>A Visual Menu</title>
+    <!--<link rel="icon" href="/assets/favicon.ico" type="image/x-icon">-->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,700,900">
+  </head>
+  <body style='padding-top: 0;'>
+  <p class='header-brand'><%= image_tag '/assets/logo.png', width: 200, height: 150, alt: 'logo'%></p>
+    <div class='login-page'>
+      <section class="login-card">
+        <a href='/'>
+          <div class='login-exit'>
+            <div></div>
+            <div></div>
+          </div>
+        </a>
+        <p class="login-logo">O͞O</p>
+        <header class="login-header">Reset Password</header>
+        <%= form_for(@user, url: password_reset_path(params[:id])) do |f| %>
+          <%= render 'shared/error_messages', object: f.object %>
+          <%= hidden_field_tag :email, @user.email %>
+
+          <div class="form-component-c">
+            <%= f.password_field :password, class: 'form-component fc-small', placeholder: "Password", required: true %>
+            <%= render :partial => "shared/form_icon", :locals => {:icon => 'edit'} %>
+          </div>
+          <div class="form-component-c">
+            <%= f.password_field :password_confirmation, class: 'form-component fc-small', placeholder: "Confirm password", required: true %>
+            <%= render :partial => "shared/form_icon", :locals => {:icon => 'edit'} %>
+          </div>
+
+          <div class="form-component-c fc-active btn-animation">
+            <%= f.submit "Submit", class: "fc-hide", id: 'send' %>
+            <label class='form-component fc-small fc-point' for="send">
+              Submit
+              <%= render :partial => "shared/form_icon", :locals => {:icon => 'send'} %>
+            </label>
+          </div>
+        <% end %>
+
+      </section>
+    </div>
+    <%# render 'layouts/footer' %>
+  </body>
+</html>

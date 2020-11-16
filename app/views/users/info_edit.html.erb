@@ -1,0 +1,93 @@
+<!--Updating the errors for editing users.-->
+<% provide(:title, "Edit user") %>
+<div id='edit-profile' class='edit-profile'>
+    <h3 class='ep-header'>Restaurant Information</h3>
+    <div id='ep-form-c' class='ep-form-c'>
+        <%= form_for(@user) do |f| %>
+            <!-- name -->
+            <span class='epib-note'>Upload business logo.</span>
+            <span class="picture form-component-c">
+              <%= f.file_field :picture, class: 'fc-hide', id: 'user_picture', accept: 'image/jpeg,image/gif,image/png' %>
+              <label class='form-component fc-small fc-point' for="user_picture">
+              <% if @user.picture.present? %>
+                <img id='user-image' src= <%= @user.picture %>>
+              <% else %>
+                <img id='user-image' src='/assets/upload_image.png'>
+              <% end %>
+              </label>
+            </span>
+            <span class='epib-note'>Enter the name of your restaurant.</span>
+            <%= f.text_field :name, placeholder: "Business name", class: "epib-input", id: "epib-input"  %>
+            <!-- phone -->
+            <span class='epib-note'>Enter the phone number of your restaurant.</span>
+            <%= f.text_field :phone, placeholder: "Phone number", class: "epib-input", id: "epib-input"  %>
+            <!-- address -->
+            <span class='epib-note'>Enter the street address of your restaurant.</span>
+            <%= f.text_field :address_line1, placeholder: "Street address", class: "epib-input", id: "epib-input"  %>
+            <!-- city -->
+            <span class='epib-note'>Enter the city/town address of your restaurant.</span>
+            <%= f.text_field :city, placeholder: "City / Town", class: "epib-input", id: "epib-input"  %>
+            <!-- state -->
+            <span class='epib-note'>Select the state address of your restaurant.</span>
+            <%= f.select(:region, options_for_select(@states, :selected => f.object.region), {:prompt => "Select State"}, :class => "form-component-c form-component fc-small") %>
+            <!-- postal code -->
+            <span class='epib-note'>Enter the Zip / Postal Code of your restaurant.</span>
+            <%= f.text_field :postal_code, placeholder: "Zip / Postal Code", class: "epib-input", id: "epib-input"  %>
+            <!-- social -->
+            <span class='epib-note'>Enter the link to your social accounts.</span>
+            <div class='epib-input-c'>
+                <img src="/assets/social/facebook.svg">
+                <%= f.text_field :facebook_link, placeholder: "Enter link", class: "epib-input", id: "epib-input"  %>
+            </div>
+            <div class='epib-input-c'>
+                <img src="/assets/social/instagram.png">
+                <%= f.text_field :instagram_link, placeholder: "Enter link", class: "epib-input", id: "epib-input"  %>
+            </div>
+            <div class='epib-input-c'>
+                <img src="/assets/social/ubereats.svg">
+                <%= f.text_field :ubereats_link, placeholder: "Enter link", class: "epib-input", id: "epib-input"  %>
+            </div>
+            <div class='epib-input-c'>
+                <img src="/assets/social/doordash.svg">
+                <%= f.text_field :doordash_link, placeholder: "Enter link", class: "epib-input", id: "epib-input"  %>
+            </div>
+            <div class='epib-input-c'>
+                <img src="/assets/social/grubhub.svg">
+                <%= f.text_field :grubhub_link, placeholder: "Enter link", class: "epib-input", id: "epib-input"  %>
+            </div>
+            <!-- submission -->
+            <span class='epib-note'>Please review your changes before saving.</span>
+            <span class='epib-btns'>
+                <%= f.submit "Save changes", class: "epib-btn" %>
+                <button onclick='return closeEPform(this)' class="epib-btn danger">CANCEL</button>
+            </span>
+        <% end %>
+    </div>
+</div>
+
+<script type='text/javascript'>
+  document.getElementById('ep-form-c')
+    .querySelector('form')
+    .addEventListener("input", function (e) {
+        e.target.defaultValue !== e.target.value
+        ? e.target.classList.add('epib-changed')
+        : e.target.classList.remove('epib-changed');
+    });
+    function closeEPform(e) {
+        e.closets('form').reset()
+        document.getElementById('edit-profile')
+        .classList.remove('active');
+        document.getElementById('user-container')
+        .classList.remove('hide');
+        return false;
+    };
+    $('#user_picture').bind('change', function() {
+      var size_in_megabytes = this.files[0].size/1024/1024;
+      if (size_in_megabytes > 5) {
+        alert('Maximum file size is 5MB. Please choose a smaller file.');
+      }else {
+        var output = document.getElementById('user-image');
+        output.src = URL.createObjectURL(event.target.files[0]);
+      }
+    });
+</script>

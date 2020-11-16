@@ -1,0 +1,43 @@
+<% provide(:title, "Forgot password") %>
+<html class="wow-animation" lang="en">
+  <head>
+    <title>A Visual Menu</title>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,700,900">
+  </head>
+  <body style='padding-top: 0;'>
+    <div style="padding: 50px 0; display: flex; align-items: center; justify-content: center;">
+  </div>
+    <div class='login-page'>
+      <section class="login-card">
+        <a href='/login'>
+          <div class='login-exit'>
+            <div></div>
+            <div></div>
+          </div>
+        </a>
+        <%= image_tag '/assets/avisualmenu-bold-logo.svg', height: 50, alt: 'logo', style: "padding: 20px 0;"%>
+        <header class="login-header">Forgot Password</header>
+        <%= form_for(:password_reset, url: password_resets_path) do |f| %>
+            <div class="form-errors">
+              <% flash.each do |message_type, message| %>
+                <p class="alert-<%= message_type %>"><%= message %></p>
+              <% end %>
+            </div>
+            <div class="form-component-c">
+              <%= f.email_field :email, class: 'form-component fc-small', required: true, placeholder: "email" %>
+              <%= render :partial => "shared/form_icon", :locals => {:icon => 'edit'} %>
+            </div>
+            <div class="form-component-c fc-active btn-animation">
+              <%= f.submit "Submit", class: "fc-hide", id: 'send' %>
+              <label class='form-component fc-small fc-point' for="send">
+                Submit
+                <%= render :partial => "shared/form_icon", :locals => {:icon => 'send'} %>
+              </label>
+            </div>
+            <p class="signup-component"><a href="/login">Sign in</a></p>
+        <% end %>
+      </section>
+    </div>
+    <%# render 'layouts/footer' %>
+  </body>
+</html>

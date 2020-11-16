@@ -1,0 +1,36 @@
+<section id="contact" class="landing-box-container has-offcolor">
+    <div class='landing-box'>
+        <img class='feast-illustration-man' src="/assets/illustration-standing-man.svg" alt="">
+        <%= form_for(
+            'message_params',
+            url: {:controller => "static_pages", :action => "contact_us", method: "post"},
+            html: { class: "landing-card landing-card-small has-shadow" }
+        ) do |f| %>
+            <div class='landing-card-title'>
+                <h3>GET IN TOUCH</h3>
+            </div>
+            <div class='landing-card-content'>
+                <div class="input">
+                    <%= f.text_field :name, placeholder: "Your name", required: true %>
+                </div>
+                <div class="input">
+                    <%= f.text_field :email, placeholder: "Your email", class: "input", required: true %>
+                </div>
+                <div class="input">
+                    <%= f.text_area :message, :cols => 40, :rows => 5, placeholder: "Message", class: 'input', required: true %>
+                </div>
+            </div>
+            <div class="landing-card-action">
+                <%= f.submit "SEND MESSAGE", class: "fc-hide", id: 'send' %>
+                <label for="send">Send</label>
+            </div>
+        <% end %>
+    </div>
+</section>
+
+<script type="text/javascript">
+    function clientIframe() {
+        document.getElementById('client-iframe')
+        .classList.toggle('active')
+    }
+</script>

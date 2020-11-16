@@ -1,0 +1,15 @@
+{
+  "name": "material-design-icons",
+  "homepage": "https://github.com/google/material-design-icons",
+  "version": "4.0.0",
+  "_release": "4.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "4.0.0",
+    "commit": "b3f05bfbf4329a5b63f50a720f867c2bac163f98"
+  },
+  "_source": "https://github.com/google/material-design-icons.git",
+  "_target": "^4.0.0",
+  "_originalSource": "material-design-icons",
+  "_direct": true
+}
