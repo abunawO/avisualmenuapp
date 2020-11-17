@@ -62,8 +62,7 @@ class MicropostsController < ApplicationController
 
   def update_micropost params
     @micropost.content  = params[:micropost][:content]
-    #@micropost.category = params[:micropost][:category]
-    @micropost.picture  = params[:micropost][:picture]
+    @micropost.picture  = params[:micropost][:picture] if params[:micropost][:picture].present?
     @micropost.price    = params[:micropost][:price]
     @micropost.description = params[:micropost][:description]
 
