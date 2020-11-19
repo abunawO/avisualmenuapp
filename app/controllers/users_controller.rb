@@ -4,8 +4,6 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy   #A before filter restricting the destroy action to admins.
 
-   #@users = User.all
-
    COUNTRIES = ["Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados",
      "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegowina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde",
      "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Congo, the Democratic Republic of the", "Cook Islands", "Costa Rica", "Cote d'Ivoire", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti",
@@ -109,7 +107,7 @@ class UsersController < ApplicationController
      @user = User.new(user_params)
      @states = STATES
      if @user.save
-       create_users_menu
+       _create_users_menu
        @user.send_activation_email
        flash[:info] = "Please check your email to activate your account."
        redirect_to root_url
@@ -157,7 +155,7 @@ class UsersController < ApplicationController
 
    private
      
-    def _creat_menu_categories
+    def _create_users_menu
       Menu.create([{ user_id: @user.id}]).first.save
     end
 
