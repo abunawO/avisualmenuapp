@@ -1,5 +1,5 @@
 
-<% @categories.each do |category, category_items| %>
+<% @categories.each do |category| %>
   <% if category.is_published %>
     <div class='microposts-c'>
       <button class='microposts-title' onclick='openMicropostList(this)'>
@@ -10,8 +10,8 @@
       </button>
 
        <ol class="menu_display_consumer">
-      <% category_items.each do |micropost|  %>
-        <%= render :partial => "microposts/micropost_to_modal", locals: {micropost: micropost} %>
+      <% category.dishes.each do |dish|  %>
+        <%= render :partial => "dishes/dish_to_modal", locals: {dish: dish} %>
       <% end %>
     </div>
   <% end %>

@@ -51,7 +51,7 @@
         <ol class="menu_display_user">
           <li class="micropost micropost-create-btn">
             <div class='micropost-action'>
-              <%= link_to dish_new_path(:category => category.name, :category_id => category.id) do %>
+              <%= link_to dish_new_path(:category => category.name, :category_id => category.id), method: :post do %>
                 <div class='micropost-image-c'>
                   <%= image_tag '/assets/create-micropost-placeholder.png', class: "mp-image" %>
                 </div>
@@ -65,7 +65,7 @@
             </div>
           </li>
           <% category.dishes.each do |dish|  %>
-            <%= render :partial => "microposts/micropost", locals: {micropost: dish} %>
+            <%= render :partial => "dishes/dish", locals: {dish: dish} %>
           <% end %>
         </ol>
       </div>

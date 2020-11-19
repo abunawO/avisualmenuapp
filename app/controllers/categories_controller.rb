@@ -33,7 +33,6 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
-    byebug
     #if current_user
       #@user = current_user
       #@category = Category.find(params["id"])
@@ -48,14 +47,12 @@ class CategoriesController < ApplicationController
   def create
     result = _create_and_add_category_to_menu category_params
     #respond_to do |format|
-    byebug
     if result.eql?(true)
       #format.html { redirect_to @category, notice: 'Category was successfully created.' }
       #format.json { render :show, status: :created, location: @category }
       flash[:success] = "Category was successfully created."
       redirect_to root_url
     else
-      byebug
       #format.html { render :new }
       #format.json { render json: @category.errors, status: :unprocessable_entity }
       flash[:error] = "#{result}"
@@ -105,7 +102,6 @@ class CategoriesController < ApplicationController
     end
 
     def _create_and_add_category_to_menu category_params
-      byebug
       if current_user.menu.categories.create([category_params]).first.save
         return true
       else 

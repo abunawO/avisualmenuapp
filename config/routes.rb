@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   #
   get 'dish_edit' => 'dishes#edit'
   #
-  get 'dish_new' =>  'dishes#new'
+  post 'dish_new' =>  'dishes#new'
   #
   get 'dish_show' => 'dishes#show'
   #

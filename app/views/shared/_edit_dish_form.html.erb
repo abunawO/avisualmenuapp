@@ -2,18 +2,18 @@
 <div class="micropost-form-container">
   <%= render 'shared/back_to_top' %>
   <div class='delete-micropost'>
-    <%= link_to(@micropost, method: :delete, data: { confirm: "Delete menu item?" }, class: 'delete-micropost-btn') do %>
+    <%= link_to(@dish, method: :delete, data: { confirm: "Delete Category dish?" }, class: 'delete-micropost-btn') do %>
       <span class='material-icons'>delete</span>Remove
     <% end %>
   </div>
-  <%= form_for(@micropost, html: { multipart: true }) do |f| %>
+  <%= form_for(@dish, html: { multipart: true }) do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
     <div class='form-component-pic-width'>
       <span class="picture form-component-c">
         <%= f.file_field :picture, class: 'fc-hide', id: 'file', accept: 'image/jpeg,image/gif,image/png' %>
         <label class='form-component fc-small fc-point' for="file">
-        <% if @micropost.picture.present? %>
-          <img id='post-image' src= <%= @micropost.picture %>>
+        <% if @dish.picture.present? %>
+          <img id='post-image' src= <%= @dish.picture %>>
         <% else %>
           <img id='post-image' src='/assets/upload_image.png'>
         <% end %>
@@ -21,11 +21,11 @@
       </span>
     </div>
     <div class="field form-component-c">
-      <%= f.text_field :content, placeholder: "Menu item title...", required: true, class: "form-component fc-small"  %>
+      <%= f.text_field :name, placeholder: "Menu item title...", required: true, class: "form-component fc-small"  %>
       <%= render :partial => "shared/form_icon", :locals => {:icon => 'edit'} %>
     </div>
     <div class="field form-component-c locked">
-      <%= f.text_field :category, placeholder: "Category Title", :value => @selected_category, disabled: true, class: "form-component fc-small"  %>
+      <%= f.text_field :category, placeholder: "Category Title", :value => @category_name, disabled: true, class: "form-component fc-small"  %>
       <%= render :partial => "shared/form_icon", :locals => {:icon => 'lock'} %>
    </div>
     <div class="field form-component-c">

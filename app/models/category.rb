@@ -2,7 +2,7 @@ class Category < ActiveRecord::Base
   belongs_to :menu
   has_many   :dishes, dependent: :destroy
 
-  validates  :name, presence: true, uniqueness: { case_sensitive: false }
+  validates  :name, presence: true
 
   before_save :update_priority
 

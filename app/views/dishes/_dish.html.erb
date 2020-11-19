@@ -1,0 +1,13 @@
+<!--The representation of a menu item/micropost partial.-->
+<!--Displayed in the feed.html.erb partial.-->
+<li class="micropost" id="micropost-<%= dish.id %>">
+  <%= link_to dish_edit_path(:category_id => dish.category_id, :dish_id => dish.id, :edit_clicked => true), :class => 'micropost-action' do %>
+    <div class='micropost-image-c'>
+      <%= image_tag dish.picture.url, class: "mp-image", id: "#{dish.id}", alt: "#{dish.description}", :data => {:title => dish.name, :price => number_to_currency(dish.price), :description => dish.description, :id => dish.id} %>
+    </div>
+    <div class='micropost-detail'>
+      <p><%= dish.name %></p>
+      <span class='micropost-detail-price'><%= number_to_currency(dish.price) %></span>
+    </div>
+  <% end %>
+</li>

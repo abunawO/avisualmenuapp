@@ -4,27 +4,23 @@ class MenuBoardsController < ApplicationController
 
  #Adding a feed instance variable to the home action.
   def home
-    byebug
     @user = current_user
     @category = Category.new
     if logged_in?
-      byebug
       @categories = @user.menu.categories
     end
 
   end
 
   def update
-    byebug
     category = Category.find(params["category_id"])
-    category.name = params["name"]
-    category.priority = params["priority"]
-    category.is_published = if params["is_published"] == "on" then true else false end
-    if category.save!
+    is_published = if params["is_published"] == "on" then true else false end
+      
+    if category.update_attributes(:name => params["name"], :priority => params["priority"], :is_published => is_published)
       flash[:success] = "Category was successfully updated."
      redirect_to root_url
     else
-      flash[:error] = "AN error accurred while updating the category."
+      flash[:error] = "An error accurred while updating the category."
     end
   end
 

@@ -24,10 +24,10 @@
         <div>
           <% if @selected_cat.any? %>
             <%= render :partial=> "users/menu_display/menu_display" %>
-            <%= render :partial=> "shared/micropost_modal" %>
+            <%= render :partial=> "shared/dish_modal" %>
           <% end %>
         </div>
-        <%= render :partial=> "shared/micropost_modal" %>
+        <%= render :partial=> "shared/dish_modal" %>
       </div>
     <% else %>
        <%= image_tag('search-not-found.png', class: 'search-not-found')  %>

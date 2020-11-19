@@ -77,7 +77,6 @@ class UsersController < ApplicationController
 
    def user_profile
      begin
-       byebug
        @user = User.all.last
        render json: {name: @user.name , email: @user.email }
 
@@ -98,31 +97,8 @@ class UsersController < ApplicationController
 
    def show
      begin
-      byebug
        @user = User.find(params[:id] || params[:user_id]) || current_user
-       #user_categories = Category.where(:user_id => @user.id)
-       #if user_categories.map(&:name).present?
-         #@categories_select = user_categories.map(&:name)
-       #else
-       @categories_select = []
-       #end
-
-       @categories       = {}
-       #@isCategorySearch = false
-
-       #if @user.microposts
-         #user_categories.each do |category|
-           #@categories[category] = @user.microposts.where(:category_id => category.id)
-         #end
-       #else
-         #user_categories.map(&:name).each do |title|
-          # @categories[title] = []
-         #end
-       #end
-
-       #@categories = @categories.sort_by { |k,v| k.priority}
-       @categories
-
+       @categories = @user.menu.categories
      rescue ActiveRecord::RecordNotFound => e
        @user = nil
        flash.now[:danger] = "User does not exists."
@@ -148,7 +124,6 @@ class UsersController < ApplicationController
    end
 
    def update
-    byebug
      @user = User.find(params[:id])
      if @user.update_attributes(user_params)
        flash.now[:success] = "Profile updated"
@@ -183,24 +158,7 @@ class UsersController < ApplicationController
    private
      
     def _creat_menu_categories
-      byebug
       Menu.create([{ user_id: @user.id}]).first.save
-    end
-    def _creat_menu_categories(feed_items, isCategorySearch)
-      no_doubles = []
-      feed_items.each do |micropost|
-        if micropost.category.present?
-          unless no_doubles.map(&:category).include?(micropost.category)
-            no_doubles.push(micropost)
-            if isCategorySearch
-              @options[micropost.category] = feed_items
-            else
-              @options[micropost.category] = feed_items.where(:category => micropost.category)
-            end
-          end
-        end
-      end
-      no_doubles
     end
 
     def user_params
