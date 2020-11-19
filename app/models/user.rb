@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  has_many :microposts, dependent: :destroy
+  has_one :menu, dependent: :destroy
+  ########to be used later####################################
   has_many :active_relationships,  class_name:  "Relationship",
                                    foreign_key: "follower_id",
                                    dependent:   :destroy
@@ -8,7 +9,7 @@ class User < ActiveRecord::Base
                                    dependent:   :destroy
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
-  #
+  #######################################################################
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
   before_create :create_activation_digest
@@ -21,7 +22,7 @@ class User < ActiveRecord::Base
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   #Adding validations to images.
-  validate  :picture_size
+  validate  :picture_size, if: :picture
 
   # Returns the hash digest of the given string.
   #Adding a digest method for use in fixtures.

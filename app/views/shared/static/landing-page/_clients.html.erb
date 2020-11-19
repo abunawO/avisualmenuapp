@@ -3,7 +3,7 @@
         <img class='feast-illustration-man' src="/assets/illustration-standing-man.svg" alt="">
         <%= form_for(
             'message_params',
-            url: {:controller => "static_pages", :action => "contact_us", method: "post"},
+            url: {:controller => "menu_boards", :action => "contact_us", method: "post"},
             html: { class: "landing-card landing-card-small has-shadow" }
         ) do |f| %>
             <div class='landing-card-title'>

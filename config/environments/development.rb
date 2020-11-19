@@ -61,7 +61,7 @@ Rails.application.configure do
 
   #Email settings in development.
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :test
-  host = 'localhost:3000'
-  config.action_mailer.default_url_options = { host: host }
+  config.action_mailer.default_url_options = { host: ENV['LOCAL_HOST_DOMAIN'] }
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
 end

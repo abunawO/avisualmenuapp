@@ -1,6 +1,8 @@
 class Category < ActiveRecord::Base
-  has_many :microposts, dependent: :destroy
-  validates :name, presence: true
+  belongs_to :menu
+  has_many   :dishes, dependent: :destroy
+
+  validates  :name, presence: true, uniqueness: { case_sensitive: false }
 
   before_save :update_priority
 

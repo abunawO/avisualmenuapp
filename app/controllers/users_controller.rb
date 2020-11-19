@@ -91,29 +91,6 @@ class UsersController < ApplicationController
      @users = User.paginate(page: params[:page])
    end
 
-   def search
-     @user = User.find(params[:id] || params[:user_id]) || current_user
-     @categories = []
-     @options    = {}
-     @isCategorySearch = false
-     if params[:search].blank?
-       flash.now[:danger] = "Invalid title search"
-       @feed_items = []
-     else
-
-       if params[:category]
-         @feed_items = @user.feed.where("content LIKE ?", "%#{params[:search].upcase.strip}%").where("category LIKE ?", "%#{ params[:category].upcase.strip}%").paginate(page: params[:page])
-       else
-         @feed_items = @user.feed.where("content LIKE ?", "%#{params[:search].upcase.strip}%").paginate(page: params[:page])
-       end
-
-
-       @categories = _creat_menu_categories(@feed_items, @isCategorySearch)
-
-     end
-   end
-
-
    def new
      @states = STATES
      @user = User.new
@@ -121,28 +98,29 @@ class UsersController < ApplicationController
 
    def show
      begin
+      byebug
        @user = User.find(params[:id] || params[:user_id]) || current_user
-       user_categories = Category.where(:user_id => @user.id)
-       if user_categories.map(&:name).present?
-         @categories_select = user_categories.map(&:name)
-       else
-         @categories_select = []
-       end
+       #user_categories = Category.where(:user_id => @user.id)
+       #if user_categories.map(&:name).present?
+         #@categories_select = user_categories.map(&:name)
+       #else
+       @categories_select = []
+       #end
 
        @categories       = {}
-       @isCategorySearch = false
+       #@isCategorySearch = false
 
-       if @user.microposts
-         user_categories.each do |category|
-           @categories[category] = @user.microposts.where(:category_id => category.id)
-         end
-       else
-         user_categories.map(&:name).each do |title|
-           @categories[title] = []
-         end
-       end
+       #if @user.microposts
+         #user_categories.each do |category|
+           #@categories[category] = @user.microposts.where(:category_id => category.id)
+         #end
+       #else
+         #user_categories.map(&:name).each do |title|
+          # @categories[title] = []
+         #end
+       #end
 
-       @categories = @categories.sort_by { |k,v| k.priority}
+       #@categories = @categories.sort_by { |k,v| k.priority}
        @categories
 
      rescue ActiveRecord::RecordNotFound => e
@@ -151,29 +129,11 @@ class UsersController < ApplicationController
      end
    end
 
-   def category_search
-     @user = User.find(params[:id] || params[:user_id]) || current_user
-     @microposts = @user.microposts
-     @categories = []
-     @options    = {}
-     @isCategorySearch = true
-
-     unless params[:category][:title].present?
-       flash.now[:danger] = "Invalid category search"
-       @feed_items = []
-     else
-       @selected_cat = @microposts.select {|mic| mic.category == params[:category][:title] }
-       @category = params[:category][:title]
-       @category_title = params[:category][:title]
-       @feed_items = @microposts.where(:category => params[:category][:title])
-     end
-     @categories = _creat_menu_categories(@selected_cat, @isCategorySearch)
-   end
-
    def create
      @user = User.new(user_params)
      @states = STATES
      if @user.save
+       create_users_menu
        @user.send_activation_email
        flash[:info] = "Please check your email to activate your account."
        redirect_to root_url
@@ -188,6 +148,7 @@ class UsersController < ApplicationController
    end
 
    def update
+    byebug
      @user = User.find(params[:id])
      if @user.update_attributes(user_params)
        flash.now[:success] = "Profile updated"
@@ -220,52 +181,56 @@ class UsersController < ApplicationController
    end
 
    private
+     
+    def _creat_menu_categories
+      byebug
+      Menu.create([{ user_id: @user.id}]).first.save
+    end
+    def _creat_menu_categories(feed_items, isCategorySearch)
+      no_doubles = []
+      feed_items.each do |micropost|
+        if micropost.category.present?
+          unless no_doubles.map(&:category).include?(micropost.category)
+            no_doubles.push(micropost)
+            if isCategorySearch
+              @options[micropost.category] = feed_items
+            else
+              @options[micropost.category] = feed_items.where(:category => micropost.category)
+            end
+          end
+        end
+      end
+      no_doubles
+    end
 
-     def _creat_menu_categories(feed_items, isCategorySearch)
-       no_doubles = []
-       feed_items.each do |micropost|
-         if micropost.category.present?
-           unless no_doubles.map(&:category).include?(micropost.category)
-             no_doubles.push(micropost)
-             if isCategorySearch
-               @options[micropost.category] = feed_items
-             else
-               @options[micropost.category] = feed_items.where(:category => micropost.category)
-             end
-           end
-         end
-       end
-       no_doubles
-     end
+    def user_params
+      params.require(:user).permit(
+                            :name, :email, :password,
+                            :password_confirmation, :phone,
+                            :address_line1, :address_line2,
+                            :city, :region, :postal_code, :country, :facebook_link, :instagram_link, :grubhub_link, :doordash_link, :ubereats_link, :picture)
+    end
 
-     def user_params
-       params.require(:user).permit(
-                             :name, :email, :password,
-                             :password_confirmation, :phone,
-                             :address_line1, :address_line2,
-                             :city, :region, :postal_code, :country, :facebook_link, :instagram_link, :grubhub_link, :doordash_link, :ubereats_link, :picture)
-     end
+    # Before filters
 
-     # Before filters
+    # Confirms a logged-in user.
+    def logged_in_user
+      unless logged_in?
+        store_location
+        flash.now[:danger] = "Please log in."
+        redirect_to login_url
+      end
+    end
 
-     # Confirms a logged-in user.
-     def logged_in_user
-       unless logged_in?
-         store_location
-         flash.now[:danger] = "Please log in."
-         redirect_to login_url
-       end
-     end
+    # Confirms the correct user.
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(root_url) unless current_user?(@user)
+    end
 
-     # Confirms the correct user.
-     def correct_user
-       @user = User.find(params[:id])
-       redirect_to(root_url) unless current_user?(@user)
-     end
-
-     # Confirms an admin user.
-     def admin_user
-       redirect_to(root_url) unless current_user.admin?
-     end
+    # Confirms an admin user.
+    def admin_user
+      redirect_to(root_url) unless current_user.admin?
+    end
 
  end

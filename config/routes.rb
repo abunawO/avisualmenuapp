@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-
-  resources :categories
   get 'password_resets/new'
 
   get 'password_resets/edit'
@@ -12,23 +10,23 @@ Rails.application.routes.draw do
 
   get '/user_profile' => "users#user_profile"
 
-  get '/' => "static_pages#home"
+  get '/' => "menu_boards#home"
 
-  #get 'static_pages/home'
-  get 'home' => 'static_pages#home'
-  root :to => 'static_pages#home'
-  #get 'static_pages/help'
-  get 'help' => 'static_pages#help'
-  #get 'static_pages/about'
-  get 'about' => 'static_pages#about'
-  #get 'static_pages/pricing'
-  get '/pricing' => 'static_pages#pricing'
-  #get 'static_pages/contact'
-  get 'contact' => 'static_pages#contact'
+  #get 'menu_boards/home'
+  get 'home' => 'menu_boards#home'
+  root :to => 'menu_boards#home'
+  #get 'menu_boards/help'
+  get 'help' => 'menu_boards#help'
+  #get 'menu_boards/about'
+  get 'about' => 'menu_boards#about'
+  #get 'menu_boards/pricing'
+  get '/pricing' => 'menu_boards#pricing'
+  #get 'menu_boards/contact'
+  get 'contact' => 'menu_boards#contact'
   #
-  post "/mail_contact"  => 'static_pages#contact_us'
+  post "/mail_contact"  => 'menu_boards#contact_us'
   #
-  get "/index"  => 'static_pages#index'
+  get "/index"  => 'menu_boards#index'
   #
   get 'signup' => 'users#new'
   #
@@ -40,21 +38,28 @@ Rails.application.routes.draw do
   #
   get 'search_page'   => 'users#search'
   #
-  get 'micropost_edit' => 'microposts#edit'
+  get 'dish_edit' => 'dishes#edit'
   #
-  get 'micropost_new' =>  'microposts#new'
+  get 'dish_new' =>  'dishes#new'
   #
-  get 'micropost_show' => 'microposts#show'
+  get 'dish_show' => 'dishes#show'
   #
   get 'category_search' => 'users#category_search'
 
-  patch "/microposts/:id" => 'microposts#edit'
+  patch "/dishes/:id" => 'dishes#edit'
 
-  post "category_edit_save" => 'static_pages#update'
+  post "category_edit_save" => 'menu_boards#update'
 
   get 'info_edit'  => 'users#info_edit'
 
   get 'category_new' =>  'categories#new'
+  delete '/categories/:id' => 'categories#destroy'
+
+
+  resource  :menu
+  resources :categories,          only: [:create, :destroy, :edit]
+  resources :dishes,              only: [:create, :destroy, :edit]
+  resources :relationships,       only: [:create, :destroy]
 
 
   #Adding following and followers actions to the Users controller.
@@ -66,11 +71,6 @@ Rails.application.routes.draw do
 
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
-  resources :microposts,          only: [:create, :destroy, :edit]
-  #get 'edit'   => 'users#edit'
-  #
-  resources :users
-  resources :relationships,       only: [:create, :destroy]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

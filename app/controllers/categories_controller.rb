@@ -33,6 +33,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
+    byebug
     #if current_user
       #@user = current_user
       #@category = Category.find(params["id"])
@@ -45,19 +46,19 @@ class CategoriesController < ApplicationController
   # POST /categories
   # POST /categories.json
   def create
-    params["category"][:user_id] = params["user_id"]
-    @category = Category.new(category_params)
-
+    result = _create_and_add_category_to_menu category_params
     #respond_to do |format|
-    if @category.save
+    byebug
+    if result.eql?(true)
       #format.html { redirect_to @category, notice: 'Category was successfully created.' }
       #format.json { render :show, status: :created, location: @category }
       flash[:success] = "Category was successfully created."
       redirect_to root_url
     else
+      byebug
       #format.html { render :new }
       #format.json { render json: @category.errors, status: :unprocessable_entity }
-      flash[:info] = "An error occured while saving the menu item."
+      flash[:error] = "#{result}"
       redirect_to root_url
     end
   end
@@ -79,11 +80,17 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
-    @category.destroy
-    respond_to do |format|
-      format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
-      format.json { head :no_content }
+    if @category.destroy
+      flash[:success] = "Category was successfully destroyed."
+      redirect_to root_url
+    else 
+      flash[:info] = "An error occured while deleting the Category."
+      redirect_to root_url
     end
+    #respond_to do |format|
+      #format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
+      #format.json { head :no_content }
+    #end
   end
 
   private
@@ -95,5 +102,16 @@ class CategoriesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
       params.require(:category).permit(:name, :priority, :is_published, :user_id)
+    end
+
+    def _create_and_add_category_to_menu category_params
+      byebug
+      if current_user.menu.categories.create([category_params]).first.save
+        return true
+      else 
+        errors = current_user.menu.categories.create([category_params]).first.errors
+        logger.debug errors.messages
+        return errors.messages
+      end
     end
 end

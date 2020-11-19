@@ -1,10 +1,10 @@
-class CreateCategories < ActiveRecord::Migration
+class CreateCategories < ActiveRecord::Migration[4.2]
   def change
     create_table :categories do |t|
       t.string :name
       t.integer :priority
       t.boolean :is_published
-      t.references :user, index: true, foreign_key: true
+      t.belongs_to :menu
 
       t.timestamps null: false
     end

@@ -5,7 +5,7 @@
       </div>
     </div>
   <h3>Categories</h3>
-  <% @categories.each do |category, category_items| %>
+  <% @categories.each do |category| %>
       <div class='microposts-c'>
         <button class='microposts-title title-board' onclick="openCategorySettings(this)">
           <span class='material-icons openCategorySettings'>
@@ -16,7 +16,7 @@
           </span>
         </button>
         <div id="edit-category" class='create-category-wrapper edit-category'>
-          <%= form_tag({controller: "static_pages", action: "update"}, method: "post", class: "nifty_form") do %>
+          <%= form_tag({controller: "menu_boards", action: "update"}, method: "post", class: "nifty_form") do %>
             <div class="field form-component-c rotate-icon">
               <%= text_field_tag :priority, category.priority, required: true, placeholder: "Category Priority Number", class: "form-component fc-small" %>
               <%= render :partial => "shared/form_icon", :locals => {:icon => 'compare_arrows'} %>
@@ -31,6 +31,13 @@
                   Publish
                 </label>
             </div>
+            <div class="field form-component-c no-box">
+              <div class='delete-micropost'>
+                <%= link_to "categories/#{category.id}", method: :delete, data: { confirm: "Delete menu Category?" }, class: 'delete-micropost-btn' do %>
+                  <span class='material-icons'>delete</span>Remove
+                <% end %>
+              </div>
+            </div>
             <%= hidden_field_tag :user_id, @user.id %>
             <%= hidden_field_tag :category_id, category.id %>
             <div class="field form-component-c fc-active ">
@@ -44,7 +51,7 @@
         <ol class="menu_display_user">
           <li class="micropost micropost-create-btn">
             <div class='micropost-action'>
-              <%= link_to micropost_new_path(:category => category.name, :category_id => category.id) do %>
+              <%= link_to dish_new_path(:category => category.name, :category_id => category.id) do %>
                 <div class='micropost-image-c'>
                   <%= image_tag '/assets/create-micropost-placeholder.png', class: "mp-image" %>
                 </div>
@@ -57,8 +64,8 @@
               <% end %>
             </div>
           </li>
-          <% category_items.each do |micropost|  %>
-            <%= render :partial => "microposts/micropost", locals: {micropost: micropost} %>
+          <% category.dishes.each do |dish|  %>
+            <%= render :partial => "microposts/micropost", locals: {micropost: dish} %>
           <% end %>
         </ol>
       </div>
