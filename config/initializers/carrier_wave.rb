@@ -6,8 +6,7 @@ CarrierWave.configure do |config|
       aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
       aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY_ID'],
       use_iam_profile: true,
-      region: 'us-east-1',
-      use_iam_profile: false,
+      region: 'us-east-1'
     }
     config.fog_directory     = ENV['S3_BUCKET']
   else
