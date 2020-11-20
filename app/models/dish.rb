@@ -4,7 +4,7 @@ class Dish < ActiveRecord::Base
   mount_uploader :picture, PictureUploader #Adding an image to the Item model.
   validates :name,        presence: true, length: { maximum: 200 }
   validates :price,       presence: true, numericality: true
-  validates :description, presence: true, length: { maximum: 200 }
+  validates :description, presence: true, length: { maximum: 400 }
 
   #Adding validations to images.
   validate  :picture_size, if: :picture
