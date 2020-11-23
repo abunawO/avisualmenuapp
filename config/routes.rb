@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  match "*path" => redirect("https://www.avisualmenuapp.com/%{path}"), :constraints => { :protocol => "http://" }
-  match "*path" => redirect("https://www.avisualmenuapp.com/%{path}"), :constraints => { :subdomain => "" }
+  if Rails.env.production?
+    get "*path" => redirect("http://www.avisualmenuapp.com/%{path}"), :constraints => { :protocol => "https://" }
+    get "*path" => redirect("http://www.avisualmenuapp.com/%{path}"), :constraints => { :subdomain => "" }
+  end
 
   get 'password_resets/new'
 
