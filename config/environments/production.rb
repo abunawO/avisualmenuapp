@@ -82,6 +82,8 @@ Rails.application.configure do
   #assets compile on heroku
   config.assets.compile = true
 
+  config.use_ssl = true
+
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
