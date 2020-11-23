@@ -97,8 +97,11 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     :address => 'smtp.mandrillapp.com',
     :port    => 587,
+    :enable_starttls_auto => true,
     :user_name => ENV['MANDRILL_SMTP_USERNAME'],
     :password  => ENV['MANDRILL_SMTP_PASSWORD'],
+    :authentication => 'plain', # Mandrill supports 'plain' or 'login'
+    :domain => 'avisualmenuapp.com', # your domain to identify your server when connecting
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
