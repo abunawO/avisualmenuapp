@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  match "*path" => redirect("https://www.avisualmenuapp.com/%{path}"), :constraints => { :protocol => "http://" }
+  match "*path" => redirect("https://www.avisualmenuapp.com/%{path}"), :constraints => { :subdomain => "" }
 
   get 'password_resets/new'
 

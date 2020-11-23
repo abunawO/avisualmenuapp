@@ -1,9 +1,4 @@
 class ApplicationController < ActionController::Base
-    def redirect_https        
-      redirect_to :protocol => "https://" if Rails.env.production?
-      return true
-    end
-    before_action :redirect_https 
     # Prevent CSRF attacks by raising an exception.
     # For APIs, you may want to use :null_session instead.
     protect_from_forgery with: :exception
