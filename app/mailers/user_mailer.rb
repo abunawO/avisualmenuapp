@@ -7,6 +7,7 @@ class UserMailer < ApplicationMailer
   #
   def account_activation(user)
     @user = user
+    puts "SMTP SETTINGS!!!!!!!!!!!!!!!!!!!!!!!!!! #{config.action_mailer.smtp_settings}"
     mail to: user.email, subject: "Account activation"
     #mail(:to => "abunawose@avisualmenu.com", :subject => "User sign up", :body => "A new user signed up called #{@user.name}. Please reach out.")
   end
