@@ -96,7 +96,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { :host => ENV['PROD_HOST_DOMAIN'] }
   config.action_mailer.smtp_settings = {
     :address => 'smtp.mandrillapp.com',
-    :port    => 587,
+    :port    => 465,
     :enable_starttls_auto => true,
     :user_name => ENV['MANDRILL_SMTP_USERNAME'],
     :password  => ENV['MANDRILL_SMTP_PASSWORD'],
