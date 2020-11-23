@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'customersupport@avisualmenuapp.com'
+  default from: 'avisualmenuapp.com'
   layout 'mailer'
 end
