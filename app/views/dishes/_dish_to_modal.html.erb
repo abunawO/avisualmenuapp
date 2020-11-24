@@ -3,7 +3,7 @@
 <li class="micropost" id="micropost-<%= dish.id %>">
     <div class='micropost-action' onclick='openModal(this)'>
         <div class='micropost-image-c'>
-        <%= image_tag dish.picture.url, class: "mp-image", id: "#{dish.id}", alt: "#{dish.description}", :data => {:title => dish.name, :price => number_to_currency(dish.price), :description => dish.description, :id => dish.id} %>
+        <%= image_tag dish.picture.url, class: "mp-image", id: "#{dish.id}", alt: "#{dish.description}", :data => {:title => cleanItemTitle(dish.name), :price => number_to_currency(dish.price), :description => dish.description, :id => dish.id} %>
         </div>
         <div class='micropost-detail'>
         <p><%= cleanItemTitle(dish.name) %></p>
