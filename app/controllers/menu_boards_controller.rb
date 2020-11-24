@@ -26,7 +26,7 @@ class MenuBoardsController < ApplicationController
 
   #can be used in view
   def cleanCategoryTitle string
-    string.strip
+    string.strip.upcase
   end
 
   def contact_us
