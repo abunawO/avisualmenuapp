@@ -200,3 +200,33 @@
     color: $secondary !important;
   }
 }
+
+.categories_select{
+  font-size: 16px;
+  padding: 10px 8px 10px 14px;
+  background: #fff;
+  //border: 1px solid #504949;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  width: 200%;
+  //margin-top: 13px;
+  //right: 55%;
+}
+
+.categories_select .select{
+  width: 82%;
+  //background:url('arrow.png') no-repeat;
+  background-position:80% center;
+}
+
+.categories_select .select select{
+  line-height: 1;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  width: 120%;
+  position: relative;
+  z-index: 10;
+  font-size: 1em;
+}

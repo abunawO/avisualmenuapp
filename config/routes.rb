@@ -41,6 +41,7 @@ Rails.application.routes.draw do
   get 'dish_edit' => 'dishes#edit'
   #
   post 'dish_new' =>  'dishes#new'
+  get  'dish_new' =>  'dishes#new'
   #
   get 'dish_show' => 'dishes#show'
   #

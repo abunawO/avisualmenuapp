@@ -21,6 +21,7 @@ class DishesController < ApplicationController
     @dish = Dish.new
     @selected_category_name = params[:category]
     @category_id = params[:category_id]
+    @categories = current_user.menu.categories
   end
 
   def edit
@@ -29,9 +30,12 @@ class DishesController < ApplicationController
     dish_id = params['dish_id'] || params['id']
     @dish = Dish.find(dish_id)
 
-    @category = @user.menu.categories.find(params['category_id'])
+    @categories = @user.menu.categories
+    @category = @categories.find(params['category_id'])
     @category_id = @category.id
-    @category_name = @category.name
+    @categories = @categories.to_a
+    @categories.insert(0, @category)
+    @categories.uniq!
 
     if !params['edit_clicked']
       update_dish(params)
@@ -44,7 +48,8 @@ class DishesController < ApplicationController
     @dish.price    = params[:dish][:price]
     @dish.description = params[:dish][:description]
 
-    if @dish.save
+
+    if current_user.menu.categories.find(params[:category]).dishes << @dish
       flash[:success] = "Category dish updated successfully."
       redirect_to root_url
     else
@@ -81,10 +86,10 @@ class DishesController < ApplicationController
     end
 
     def _create_and_add_dish_to_category dish_params
-      if @user.menu.categories.find(params[:category_id]).dishes.create([dish_params]).first.save
+      if @user.menu.categories.find(params[:categories_select]).dishes.create([dish_params]).first.save
         return true
       else 
-        errors = @user.menu.categories.find(params[:category_id]).dishes.create([dish_params]).first.errors
+        errors = @user.menu.categories.find(params[:categories_select]).dishes.create([dish_params]).first.errors
         logger.debug errors.messages
         return errors.messages
       end
