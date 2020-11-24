@@ -11,7 +11,7 @@
       <% end %>
     </div>
     <div class='micropost-detail'>
-      <p><%= dish.name %></p>
+      <p><%= cleanItemTitle(dish.name) %></p>
       <span class='micropost-detail-price'><%= number_to_currency(dish.price) %></span>
     </div>
   <% end %>

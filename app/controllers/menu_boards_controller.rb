@@ -1,6 +1,6 @@
 class MenuBoardsController < ApplicationController
 
-  helper_method :cleanCategoryTitle
+  helper_method :cleanCategoryTitle, :cleanItemTitle
 
  #Adding a feed instance variable to the home action.
   def home
@@ -27,6 +27,15 @@ class MenuBoardsController < ApplicationController
   #can be used in view
   def cleanCategoryTitle string
     string.strip.upcase
+  end
+
+  def cleanItemTitle string
+    str_a = string.split(' ')
+    title = ''
+    str_a.each do |str|
+      title.concat(" #{str.capitalize}")
+    end
+    return title
   end
 
   def contact_us
