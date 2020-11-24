@@ -24,20 +24,6 @@ class MenuBoardsController < ApplicationController
     end
   end
 
-  #can be used in view
-  def cleanCategoryTitle string
-    string.strip.upcase
-  end
-
-  def cleanItemTitle string
-    str_a = string.split(' ')
-    title = ''
-    str_a.each do |str|
-      title.concat(" #{str.capitalize}")
-    end
-    return title
-  end
-
   def contact_us
     begin
       UserMailer.say_hello(params).deliver_later

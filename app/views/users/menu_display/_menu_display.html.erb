@@ -4,7 +4,7 @@
     <div class='microposts-c'>
       <button class='microposts-title' onclick='openMicropostList(this)'>
         <span class='micropost-t-left'>
-          <%= category.name %>
+          <%= cleanCategoryTitle(category.name) %>
         </span>
         <span class='material-icons openListIcon'>keyboard_arrow_down</span>
       </button>

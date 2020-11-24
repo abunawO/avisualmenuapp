@@ -6,7 +6,7 @@
         <%= image_tag dish.picture.url, class: "mp-image", id: "#{dish.id}", alt: "#{dish.description}", :data => {:title => dish.name, :price => number_to_currency(dish.price), :description => dish.description, :id => dish.id} %>
         </div>
         <div class='micropost-detail'>
-        <p><%= dish.name %></p>
+        <p><%= cleanItemTitle(dish.name) %></p>
         <span class='micropost-detail-price'><%=number_to_currency(dish.price) %></span>
         </div>
     </div>
